@@ -21,13 +21,13 @@ services:
       test: ["CMD-SHELL", "curl http://localhost/status.php | jq -e .installed"]
     image: nextcloud-app
     ports:
-      - 80:80
+      - "8080:80"
     restart: unless-stopped
     stop_signal: SIGWINCH
     volumes:
-      - html:/var/www/html
-      - config:/var/www/html/config
-      - data:/var/www/html/data
+      - /cube_pool/nextcloud/app:/var/www/html
+      - /cube_pool/nextcloud/config:/var/www/html/config
+      - /cube_pool/nextcloud/data:/var/www/html/data
 
   cron:
     container_name: nextcloud-cron
@@ -42,9 +42,9 @@ services:
     image: nextcloud-app
     restart: unless-stopped
     volumes:
-      - html:/var/www/html
-      - config:/var/www/html/config
-      - data:/var/www/html/data
+      - /cube_pool/nextcloud/app:/var/www/html
+      - /cube_pool/nextcloud/config:/var/www/html/config
+      - /cube_pool/nextcloud/data:/var/www/html/data
 
   hpb:
     container_name: nextcloud-hpb
@@ -64,9 +64,9 @@ services:
     restart: unless-stopped
     user: www-data
     volumes:
-      - html:/var/www/html
-      - config:/var/www/html/config
-      - data:/var/www/html/data
+      - /cube_pool/nextcloud/app:/var/www/html
+      - /cube_pool/nextcloud/config:/var/www/html/config
+      - /cube_pool/nextcloud/data:/var/www/html/data
 
   cache:
     build: ./redis
@@ -90,14 +90,8 @@ services:
     image: nextcloud-db
     restart: unless-stopped
     volumes:
-      - db:/var/lib/postgresql/data
+      - /cube_pool/nextcloud/postgres:/var/lib/postgresql/data
 
 networks:
   default:
     name: nextcloud
-
-volumes:
-  html:
-  config:
-  data:
-  db:
