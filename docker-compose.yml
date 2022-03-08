@@ -21,9 +21,9 @@ services:
     image: nextcloud-app
     restart: unless-stopped
     volumes:
-      - /var/lib/nextcloud/app:/var/www/html
-      - /var/lib/nextcloud/config:/var/www/html/config
-      - /var/lib/nextcloud/data:/var/www/html/data
+      - app:/var/www/html
+      - config:/var/www/html/config
+      - data:/var/www/html/data
 
   cron:
     depends_on:
@@ -38,9 +38,9 @@ services:
     restart: unless-stopped
     stop_signal: SIGKILL
     volumes:
-      - /var/lib/nextcloud/app:/var/www/html
-      - /var/lib/nextcloud/config:/var/www/html/config
-      - /var/lib/nextcloud/data:/var/www/html/data
+      - app:/var/www/html
+      - config:/var/www/html/config
+      - data:/var/www/html/data
 
   hpb:
     depends_on:
@@ -63,9 +63,9 @@ services:
     stop_signal: SIGKILL
     user: www-data
     volumes:
-      - /var/lib/nextcloud/app:/var/www/html
-      - /var/lib/nextcloud/config:/var/www/html/config
-      - /var/lib/nextcloud/data:/var/www/html/data
+      - app:/var/www/html
+      - config:/var/www/html/config
+      - data:/var/www/html/data
 
   webserver:
     build: ./nginx
@@ -76,7 +76,7 @@ services:
       - "55181:80"
     restart: unless-stopped
     volumes:
-      - /var/lib/nextcloud/app:/var/www/html:ro
+      - app:/var/www/html:ro
 
   cache:
     build: ./redis
@@ -87,7 +87,7 @@ services:
       interval: 5s
     restart: unless-stopped
     volumes:
-      - /var/lib/nextcloud/cache:/data
+      - cache:/data
 
   db:
     build: ./postgres
@@ -98,4 +98,11 @@ services:
       interval: 5s
     restart: unless-stopped
     volumes:
-      - /var/lib/nextcloud/db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
+
+volumes:
+  app:
+  cache:
+  config:
+  data:
+  db:
