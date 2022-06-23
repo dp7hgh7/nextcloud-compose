@@ -1,3 +1,3 @@
-FROM postgres:14.4-alpine
+FROM bitnami/postgresql:14
 
 COPY postgresql.conf /etc/postgresql/

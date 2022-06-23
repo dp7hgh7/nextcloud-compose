@@ -87,7 +87,7 @@ services:
       interval: 5s
     restart: unless-stopped
     volumes:
-      - cache:/data
+      - cache:/bitnami/redis/data
 
   db:
     build: ./postgres
@@ -98,7 +98,7 @@ services:
       interval: 5s
     restart: unless-stopped
     volumes:
-      - db:/var/lib/postgresql/data
+      - db:/bitnami/postgresql
 
 volumes:
   app:
